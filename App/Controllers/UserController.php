@@ -11,8 +11,9 @@ use App\Services\RoleServices\RoleService;
 use App\Services\UserRoleServices\UserRoleService;
 use App\Services\UserServices\UserService;
 
-class UserController extends Controller
+class UserController extends AdminController
 {
+    
     private $userService = null;
     private $userRoleService = null;
     private $roleService = null;
@@ -21,6 +22,8 @@ class UserController extends Controller
         $this->userService = new UserService();
         $this->userRoleService = new UserRoleService();
         $this->roleService = new RoleService();
+        // base controller
+        parent::__construct();
     }
     public function Index($page = null)
     {
@@ -72,7 +75,7 @@ class UserController extends Controller
             $user = $this->userService->GetByUsername($user['Username']);
             $roleId = $_POST['RoleId'];
             $this->userRoleService->AddRoleToUser($user->Id, $roleId);
-            $this->view('User.Create', ['title' => 'Create User', 'message' => 'Tạo mới thành công', 'roles' => (object)$roles]);
+            $this->redirect('/user');
         }
         $this->view('User.Create', ['title' => 'Create User', 'roles' => $roles]);
     }
@@ -121,7 +124,7 @@ class UserController extends Controller
             $result = $this->userService->Delete($id);
             if (!$result) {
 
-                echo Response::badRequest([], 'Xóa thất bại!', 400);
+                 Response::badRequest([], 'Xóa thất bại!', 400);
                 return;
             }
             // remove role from user
@@ -129,7 +132,7 @@ class UserController extends Controller
             foreach ($roles as $role) {
                 $this->userRoleService->RemoveRoleFromUser($id, $role['Id']);
             }
-            echo Response::success([], 'Xóa thành công!', 200);
+             Response::success([], 'Xóa thành công!', 200);
         }
     }
 }

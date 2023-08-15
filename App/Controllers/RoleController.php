@@ -6,17 +6,19 @@ use App\Services\Common\Pagination;
 use App\Services\Common\Response;
 use App\Services\RoleServices\RoleService;
 
-class RoleController extends Controller
+class RoleController extends AdminController
 {
     private $roleService = null;
     public function __construct()
     {
         $this->roleService = new RoleService();
+        // base controller
+        parent::__construct();
     }
     public function Index($page = null)
     {
         $pageConfig = Config::PageConfig();
-        $pageIndex = $page ?? 0;
+        $pageIndex = $page ?? 1;
         $totalRecords   = count($this->roleService->GetAll());
         $pagConfig = [
             'baseURL' => '/user/page',
@@ -80,7 +82,7 @@ class RoleController extends Controller
             ];
 
             $this->roleService->Update($role, $id);
-            $this->view('Role.Edit', ['role' => (object)$role, 'title' => 'Sửa quyền', 'message' => 'Cập nhật thành công!']);
+            $this->redirect('/role');
         }
 
         // Load the view for editing the user
@@ -98,10 +100,10 @@ class RoleController extends Controller
             $result = $this->roleService->Delete($id);
             if (!$result) {
                 
-                echo Response::badRequest([], 'Xóa thất bại!', 400);
+                Response::badRequest([], 'Xóa thất bại!', 400);
                 return;
             }
-            echo Response::success([], 'Xóa thành công!', 200);
+             Response::success([], 'Xóa thành công!', 200);
         }
     }
 }
