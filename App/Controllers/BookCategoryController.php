@@ -9,7 +9,7 @@ use App\Services\Common\Helper;
 use App\Services\Common\Pagination;
 use App\Services\Common\Response;
 
-class BookCategoryController extends Controller
+class BookCategoryController extends AdminController
 {
 
     private  $bookCategoryService;

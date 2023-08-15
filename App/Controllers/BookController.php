@@ -12,7 +12,7 @@ use App\Services\Common\Pagination;
 use App\Services\Common\Request;
 use App\Services\Common\Response;
 
-class BookController extends Controller
+class BookController extends AdminController
 {
     private  $bookService;
     private $bootCategoryService;
@@ -20,6 +20,8 @@ class BookController extends Controller
     {
         $this->bookService = new  BookService();
         $this->bootCategoryService = new  BookCategoryService();
+        // base controller  
+        parent::__construct();
     }
 
     public function Index($page = null)
