@@ -2,7 +2,7 @@
     <div class="d-flex">
         <!-- LOGO -->
         <div class="navbar-brand-box">
-            <a href="index.html" class="logo logo-dark">
+            <a href="/" class="logo logo-dark">
                 <span class="logo-sm">
                     <img src="/assets/images/logo-sm.svg" alt="" height="24">
                 </span>
@@ -11,7 +11,7 @@
                 </span>
             </a>
 
-            <a href="index.html" class="logo logo-light">
+            <a href="/" class="logo logo-light">
                 <span class="logo-sm">
                     <img src="/assets/images/logo-sm.svg" alt="" height="24">
                 </span>
@@ -46,7 +46,6 @@
                     <div class="form-group m-0">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search ..." aria-label="Search Result">
-
                             <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
                         </div>
                     </div>
@@ -174,7 +173,9 @@
         <div class="dropdown d-inline-block">
             <button type="button" class="btn header-item bg-light-subtle border-start border-end" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img class="rounded-circle header-profile-user" src="/assets/images/users/avatar-1.jpg" alt="Header Avatar">
-                <span class="d-none d-xl-inline-block ms-1 fw-medium">Sen MS</span>
+                <span class="d-none d-xl-inline-block ms-1 fw-medium">
+
+                </span>
                 <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-end">
@@ -188,3 +189,29 @@
 
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        // get user info
+        let token = localStorage.getItem('token');
+        // parse JWT token
+        let payload = parseJwt(token);
+        // get user info
+        let userId = payload.userId;
+        let username = payload.username;
+        let email = payload.email;
+        let roleId = payload.roleId;
+        // set user info
+        $('#header-username').text(username);
+        $('#header-email').text(email);
+        // get role info
+    })
+
+
+    function parseJwt(token) {
+        try {
+            return JSON.parse(atob(token.split('.')[1]));
+        } catch (e) {
+            return null;
+        }
+    }
+</script>

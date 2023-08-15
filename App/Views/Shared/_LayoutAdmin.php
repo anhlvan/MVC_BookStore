@@ -80,11 +80,11 @@
                         <div class="col-sm-6">
                             <script>
                                 document.write(new Date().getFullYear())
-                            </script>
+                            </script> © SenMS.
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end d-none d-sm-block">
-                                Design & Develop by <a href="/" class="text-decoration-underline">Nhóm 1</a>
+                                Design & Develop by <a href="/" class="text-decoration-underline">HMZTeam</a>
                             </div>
                         </div>
                     </div>
