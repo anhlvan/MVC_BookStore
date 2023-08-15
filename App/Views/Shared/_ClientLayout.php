@@ -7,9 +7,13 @@
     <title><?= $title ?? "Book Store" ?></title>
     <link rel="stylesheet" href="/assets-client/style.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link href="https://fonts.googleapis.com/css2?
-      family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="/assets/images/EbookStore-Logo.png" rel="icon" />
+    <link href="/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- jquery -->
+    <script src="/assets/libs/jquery/jquery.min.js"></script>
 </head>
 
 <body>
@@ -36,22 +40,7 @@
                 </a>
                 <img src="/assets-client/images/menu.png" class="menu-icon" onclick="menutoggle()" />
             </div>
-            <div class="row">
-                <div class="col-2">
-                    <h1>
-                        The Books Lover<br />
-                        Read all About it!
-                    </h1>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit.<br />
-                        Incidunt voluptas, porro nisi beatae inventore consequuntur?
-                    </p>
-                    <a href="ebooks.html" class="btn">Explore Now &#x27F6;</a>
-                </div>
-                <div class="col-2">
-                    <img src="/assets-client/images/header-pic.png" alt="Header Pic" />
-                </div>
-            </div>
+
         </div>
     </div>
     <!----------------featured Books -------------------->
@@ -144,6 +133,7 @@
             <p class="copyright">Copyright 2020 - EbookStore</p>
         </div>
     </div>
+    <script src="/assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <!-- ---------Javascript for toggle menu------------- -->
     <script>
         var MenuItems = document.getElementById("MenuItems");
