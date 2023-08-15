@@ -87,6 +87,7 @@ class PermissionService extends BaseService implements IPermissionService
         $data['UpdatedAt'] = date('Y-m-d H:i:s');
         $data['UpdatedBy'] = $data['UpdatedBy'] ?? 'admin';
         $sql = SqlCommon::Update($this->tableName, $data,  $id);
+        $sql = SqlCommon::Update($this->tableName, $data, "WHERE Id = $id");
         return $this->context->query($sql);
 	}
 	

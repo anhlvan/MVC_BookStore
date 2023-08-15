@@ -210,6 +210,17 @@
             $('#header-email').text(email);
             // get role info
         }
+// parse JWT token
+        let payload = parseJwt(token);
+        // get user info
+        let userId = payload.userId;
+        let username = payload.username;
+        let email = payload.email;
+        let roleId = payload.roleId;
+        // set user info
+        $('#header-username').text(username);
+        $('#header-email').text(email);
+        // get role info
     })
 
 
