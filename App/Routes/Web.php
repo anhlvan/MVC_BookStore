@@ -62,7 +62,6 @@ $router->get('/book/edit/{id}', 'BookController@Edit');
 $router->post('/book/edit/{id}', 'BookController@Edit');
 
 $router->delete('/book/delete/{id}', 'BookController@Delete');
-
 // Order
 $router->get('/order', 'OrderController@Index');
 $router->get('/order/page/{page}', 'OrderController@Index');

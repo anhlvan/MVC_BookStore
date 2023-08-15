@@ -6,6 +6,7 @@ use App\Core\Config;
 use App\Core\Controller;
 use App\Services\BookCategoryServices\BookCategoryService;
 use App\Services\BookServices\BookService;
+use App\Services\Common\Enums\HttpMethod;
 use App\Services\Common\Helper;
 use App\Services\Common\Pagination;
 use App\Services\Common\Request;
@@ -28,6 +29,7 @@ class BookController extends Controller
         $totalRecords   = count($this->bookService->GetAll());
         $pagConfig = [
             'baseURL' => '/book/page',
+            'baseURL' => '/user/page',
             'totalRows' => $totalRecords,
             'perPage' => $pageConfig['PageSize'],
         ];
