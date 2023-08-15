@@ -12,12 +12,12 @@ class BookService extends BaseService implements IBookService {
 	 * @param mixed $pageSize
 	 * @return mixed
 	 */
-	public function GetByCategory($CategoryId, $pageIndex, $pageSize) {
-        $offset = ($pageIndex - 1) * $pageSize;
+	public function GetByCategory($CategoryId, $limit) {
+       
         $sql = SqlCommon::SELECT_CONDITION($this->tableName, "
         WHERE CategoryId = '$CategoryId'
         ORDER BY CreatedAt DESC
-        LIMIT $offset, $pageSize"); // "SELECT * FROM Book WHERE CategoryId = '$CategoryId' LIMIT $offset, $pageSize
+        LIMIT  $limit");
         $data = $this->context->fetch($sql);
         $bookCategories = [];
         foreach ($data as $item) {
@@ -55,8 +55,6 @@ class BookService extends BaseService implements IBookService {
 			ORDER BY CreatedAt DESC
 			LIMIT $offset, $pageSize
 		";
-
-        $sql = SqlCommon::SELECT_LIMIT($this->tableName, $offset, $pageSize);
         $data = $this->context->fetch($sql);
         $books = [];
         foreach ($data as $item) {
@@ -144,8 +142,8 @@ class BookService extends BaseService implements IBookService {
 		// order by TOP Book Best Seller from order detail 
 		$sql = "
 			SELECT b.*, bc.Name AS CategoryName, COUNT(od.BookId) AS Total FROM $this->tableName b
-			LEFT JOIN BookCategory bc ON b.CategoryId = bc.Id
-			LEFT JOIN OrderDetails od ON b.Id = od.BookId
+			JOIN BookCategory bc ON b.CategoryId = bc.Id
+			JOIN OrderDetails od ON b.Id = od.BookId
 			GROUP BY b.Id
 			ORDER BY Total DESC
 			LIMIT $limit

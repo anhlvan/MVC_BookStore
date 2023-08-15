@@ -10,7 +10,6 @@
                     </div>
                     <div class="form-group mt-2">
                         <a href="/book-category" class="btn btn-primary">Back</a>
-                        <a href="/category-book" class="btn btn-primary">Back</a>
                         <button type="submit" class="btn btn-success">Save</button>
                     </div>
                 </form>
