@@ -1,11 +1,12 @@
 <?php
-
 namespace App\Models;
 
 use App\Models\Base\BaseModel;
 
 namespace App\Models;
+
 use App\Models\Base\BaseModel;
+
 class Book extends BaseModel
 {
     // Properties
