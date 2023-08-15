@@ -2,8 +2,8 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                Danh Sách Quyền
-                <a href="/role/create" class="btn btn-success btn-sm float-right">
+                Danh Sách Danh Mục Sách
+                <a href="/book-category/create" class="btn btn-success btn-sm float-right">
                     <i class="fa fa-plus"></i>
                     Thêm Mới
                 </a>
@@ -23,18 +23,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($roles as $role) : ?>
+                        <?php foreach ($bookCategories as $item) : ?>
                             <tr>
-                                <td><?= $role->Id ?></td>
-                                <td><?= $role->Name; ?></td>
-                                <td><?= $role->CreatedAt; ?></td>
-                                <td><?= $role->CreatedBy; ?></td>
-                                <td><?= $role->UpdatedAt; ?></td>
-                                <td><?= $role->UpdatedBy; ?></td>
-                                <td><?= ($role->IsActive == true) ? 'Active' : 'Inactive'; ?></td>
+                                <td><?= $item->Id ?></td>
+                                <td><?= $item->Name; ?></td>
+                                <td><?= $item->CreatedAt; ?></td>
+                                <td><?= $item->CreatedBy; ?></td>
+                                <td><?= $item->UpdatedAt; ?></td>
+                                <td><?= $item->UpdatedBy; ?></td>
+                                <td><?= ($item->IsActive == true) ? 'Active' : 'Inactive'; ?></td>
                                 <td>
-                                    <a class="btn btn-primary btn-sm" href="/role/edit/<?= $role->Id ?>">Edit</a>
-                                    <button onclick="remove('<?= $role->Id ?>')" type="button" class="btn btn-danger btn-sm">Delete</button>
+                                    <a class="btn btn-primary btn-sm" href="/book-category/edit/<?= $item->Id ?>">Edit</a>
+                                    <button onclick="remove('<?= $item->Id ?>')" type="button" class="btn btn-danger btn-sm">Delete</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -62,7 +62,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '/role/delete/' + id,
+                    url: '/book-category/delete/' + id,
                     method: 'DELETE',
                     contentType: 'application/json',
                     success: function(res) {
