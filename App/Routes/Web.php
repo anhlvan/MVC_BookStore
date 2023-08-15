@@ -4,13 +4,20 @@ use App\Core\Router;
 
 $router = new Router();
 
-#endregion Admin Area
-// Authen
+$router->get('/account', 'AuthenController@UserLogin');
+$router->get('/account/page/{page}', 'AuthenController@UserLogin');
+$router->post('/account', 'AuthenController@UserLogin');
+
 $router->get('/auth/login', 'AuthenController@Login');
 $router->post('/auth/login', 'AuthenController@Login');
+
 $router->get('/auth/register', 'AuthenController@Register');
+$router->post('/auth/register', 'AuthenController@Register');
+
 $router->get('/auth/logout', 'AuthenController@Logout');
 
+
+#endregion Admin Area
 
 // User
 $router->get('/dashboard', 'DashboardController@Index');
@@ -80,6 +87,8 @@ $router->get('/home', 'HomeController@Index');
 $router->get('/home/page/{page}', 'HomeController@Index');
 
 $router->get('/home/detail/{slug}/{id}', 'HomeController@Detail');
+
+$router->get('/home/check-out', 'HomeController@CheckOut');
 
 
 #endregion Client Area
