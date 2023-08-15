@@ -1,8 +1,6 @@
-
-<div class="row">
-    <div class="col-md-12">
-        <h1>Home</h1>
-        <p>Welcome to the home page!</p>
-    </div>
+<div class="small-container">
+    
+<?php require_once "Pages/BookHot.php"; ?>
+<?php require_once "Pages/BookNew.php"; ?>
+    
 </div>
-

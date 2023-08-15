@@ -6,13 +6,12 @@ use App\Core\Config;
 use App\Core\Controller;
 use App\Services\BookCategoryServices\BookCategoryService;
 use App\Services\BookServices\BookService;
-use App\Services\Common\Enums\HttpMethod;
 use App\Services\Common\Helper;
 use App\Services\Common\Pagination;
 use App\Services\Common\Request;
 use App\Services\Common\Response;
 
-class BookController extends Controller
+class BookController extends AdminController
 {
     private  $bookService;
     private $bootCategoryService;
@@ -20,6 +19,8 @@ class BookController extends Controller
     {
         $this->bookService = new  BookService();
         $this->bootCategoryService = new  BookCategoryService();
+        // base controller  
+        parent::__construct();
     }
 
     public function Index($page = null)
@@ -29,7 +30,6 @@ class BookController extends Controller
         $totalRecords   = count($this->bookService->GetAll());
         $pagConfig = [
             'baseURL' => '/book/page',
-            'baseURL' => '/user/page',
             'totalRows' => $totalRecords,
             'perPage' => $pageConfig['PageSize'],
         ];
