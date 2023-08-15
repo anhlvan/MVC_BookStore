@@ -55,6 +55,8 @@ class BookService extends BaseService implements IBookService {
 			ORDER BY CreatedAt DESC
 			LIMIT $offset, $pageSize
 		";
+
+        $sql = SqlCommon::SELECT_LIMIT($this->tableName, $offset, $pageSize);
         $data = $this->context->fetch($sql);
         $books = [];
         foreach ($data as $item) {

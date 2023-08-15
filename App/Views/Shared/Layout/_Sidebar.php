@@ -42,6 +42,12 @@
                     <span data-key="t-order">Order</span>
                 </a>
             </li>
+            <li>
+                <a href="/book">
+                    <i data-feather="book"></i>
+                    <span data-key="t-dashboard">Sách</span>
+                </a>
+            </li>
         </ul>
     </div>
     <!-- Sidebar -->

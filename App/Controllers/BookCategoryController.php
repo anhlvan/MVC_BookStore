@@ -16,8 +16,6 @@ class BookCategoryController extends AdminController
     public function __construct()
     {
         $this->bookCategoryService = new  BookCategoryService();
-        // base controller
-        parent::__construct();
     }
 
     public function Index($page = null)
