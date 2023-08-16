@@ -1,97 +1,179 @@
-<?php
-// App/Routes/Web.php
-use App\Core\Router;
+<?php 
+namespace App\Services\BookServices;
+use App\Models\Book;
+use App\Services\BaseService;
+use App\Services\Common\SqlCommon;
+class BookService extends BaseService implements IBookService {
 
-$router = new Router();
+    protected $tableName = 'Book';
+	/**
+	 * @param mixed $CategoryId
+	 * @param mixed $pageIndex
+	 * @param mixed $pageSize
+	 * @return mixed
+	 */
+	public function GetByCategory($CategoryId, $limit) {
+       
+        $sql = SqlCommon::SELECT_CONDITION($this->tableName, "
+        WHERE CategoryId = '$CategoryId'
+        ORDER BY CreatedAt DESC
+        LIMIT  $limit");
+        $data = $this->context->fetch($sql);
+        $bookCategories = [];
+        foreach ($data as $item) {
+            $bookCategorie = new Book($item);
+            array_push($bookCategories, $bookCategorie);
+        }
+        return $bookCategories;
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	public function GetAll() {
+        $sql = SqlCommon::SELECT($this->tableName);
+        $data = $this->context->fetch($sql);
+        $books = [];
+        foreach ($data as $item) {
+            $book = new Book($item);
+            array_push($books, $book);
+        }
+        return $books;
+	}
+	
+	/**
+	 *
+	 * @param mixed $pageIndex
+	 * @param mixed $pageSize
+	 * @return mixed
+	 */
+	public function GetWithPaginate($pageIndex, $pageSize) {
+        $offset = ($pageIndex - 1) * $pageSize;
+        $sql = "
+			SELECT b.*, bc.Name AS CategoryName FROM $this->tableName b
+			LEFT JOIN BookCategory bc ON b.CategoryId = bc.Id
+			ORDER BY CreatedAt DESC
+			LIMIT $offset, $pageSize
+		";
+        $data = $this->context->fetch($sql);
+        $books = [];
+        foreach ($data as $item) {
+            $book = new Book($item);
+            array_push($books, $book);
+        }
+        return $books;
+	}
+	
+	/**
+	 *
+	 * @param mixed $id
+	 * @return mixed
+	 */
+	public function GetById($id) {
+        $sql = SqlCommon::SELECT_CONDITION($this->tableName, "WHERE Id = '$id'");
+        $data = $this->context->fetch_one($sql);
+        $book = new Book($data);
+        return $book;
+	}
+	
+	/**
+	 *
+	 * @param mixed $data
+	 * @return mixed
+	 */
+	public function Add($data) {
+        $data['CreatedAt'] = date('Y-m-d H:i:s');
+        $data['CreatedBy'] = $data['CreatedBy'] ?? 'System';
+        $data['IsActive'] = $data['IsActive'] ?? 1;
+        $sql = SqlCommon::INSERT($this->tableName, $data);
+        return $this->context->query($sql) ? true : false;
+	}
+	
+	/**
+	 *
+	 * @param mixed $data
+	 * @param mixed $id
+	 * @return mixed
+	 */
+	public function Update($data, $id) {
+        $data['UpdatedAt'] = date('Y-m-d H:i:s');
+        $data['UpdatedBy'] = $data['UpdatedBy'] ?? 'System';
+        $sql = SqlCommon::UPDATE($this->tableName, $data, $id);
+        return $this->context->query($sql) ? true : false;
+	}
+	
+	/**
+	 *
+	 * @param mixed $id
+	 * @return mixed
+	 */
+	public function Delete($id) {
+        $sql = SqlCommon::DELETE($this->tableName, $id);
+        return $this->context->query($sql) ? true : false;
+	}
+	/**
+	 * @param mixed $pageIndex
+	 * @param mixed $pageSize
+	 * @return mixed
+	 */
+	public function GetBookLastes($pageIndex, $pageSize) {
+		$offset = ($pageIndex - 1) * $pageSize;
+		$sql = "
+			SELECT b.*, bc.Name AS CategoryName FROM $this->tableName b
+			LEFT JOIN BookCategory bc ON b.CategoryId = bc.Id
+			ORDER BY CreatedAt DESC
+			LIMIT $offset, $pageSize
+		";
+		$data = $this->context->fetch($sql);
+		$books = [];
+		foreach ($data as $item) {
+			$book = new Book($item);
+			array_push($books, $book);
+		}
+		return $books;
+	}
+	
+	/**
+	 *
+	 * @param mixed $limit
+	 * @return mixed
+	 */
+	public function GetBestSeller($limit) {
+		// order by TOP Book Best Seller from order detail 
+		$sql = "
+			SELECT b.*, bc.Name AS CategoryName, COUNT(od.BookId) AS Total FROM $this->tableName b
+			JOIN BookCategory bc ON b.CategoryId = bc.Id
+			JOIN OrderDetails od ON b.Id = od.BookId
+			GROUP BY b.Id
+			ORDER BY Total DESC
+			LIMIT $limit
+		";
+		$data = $this->context->fetch($sql);
+		$books = [];
+		foreach ($data as $item) {
+			$book = new Book($item);
+			array_push($books, $book);
+		}
+		return $books;
 
-$router->get('/account', 'AuthenController@UserLogin');
-$router->get('/account/page/{page}', 'AuthenController@UserLogin');
-$router->post('/account', 'AuthenController@UserLogin');
-
-$router->get('/auth/login', 'AuthenController@Login');
-$router->post('/auth/login', 'AuthenController@Login');
-
-$router->get('/auth/register', 'AuthenController@Register');
-$router->post('/auth/register', 'AuthenController@Register');
-
-$router->get('/auth/logout', 'AuthenController@Logout');
-
-
-#endregion Admin Area
-
-// User
-$router->get('/admin', 'DashboardController@Index');
-$router->get('/dashboard', 'DashboardController@Index');
-$router->get('/user', 'UserController@Index');
-$router->get('/user/page/{page}', 'UserController@Index');
-
-$router->get('/user/create', 'UserController@Create');
-$router->post('/user/create', 'UserController@Create');
-
-$router->get('/user/edit/{id}', 'UserController@Edit');
-$router->post('/user/edit/{id}', 'UserController@Edit');
-
-$router->delete('/user/delete/{id}', 'UserController@Delete');
-
-
-// Role
-$router->get('/role', 'RoleController@Index');
-$router->get('/role/page/{page}', 'RoleController@Index');
-
-$router->get('/role/create', 'RoleController@Create');
-$router->post('/role/create', 'RoleController@Create');
-
-$router->get('/role/edit/{id}', 'RoleController@Edit');
-$router->post('/role/edit/{id}', 'RoleController@Edit');
-
-$router->delete('/role/delete/{id}', 'RoleController@Delete');
-
-
-// Book Category
-$router->get('/book-category', 'BookCategoryController@Index');
-$router->get('/book-category/page/{page}', 'BookCategoryController@Index');
-
-$router->get('/book-category/create', 'BookCategoryController@Create');
-$router->post('/book-category/create', 'BookCategoryController@Create');
-
-$router->get('/book-category/edit/{id}', 'BookCategoryController@Edit');
-$router->post('/book-category/edit/{id}', 'BookCategoryController@Edit');
-
-$router->delete('/book-category/delete/{id}', 'BookCategoryController@Delete');
-
-// Book
-$router->get('/book', 'BookController@Index');
-$router->get('/book/page/{page}', 'BookController@Index');
-
-$router->get('/book/create', 'BookController@Create');
-$router->post('/book/create', 'BookController@Create');
-
-$router->get('/book/edit/{id}', 'BookController@Edit');
-$router->post('/book/edit/{id}', 'BookController@Edit');
-
-$router->delete('/book/delete/{id}', 'BookController@Delete');
-
-// Order
-$router->get('/order', 'OrderController@Index');
-$router->get('/order/page/{page}', 'OrderController@Index');
-
-$router->get('/order/detail/{id}', 'OrderController@Detail');
-$router->get('/order/detail/{id}/page/{page}', 'OrderController@Detail');
-
-$router->post('/order/approve/{id}', 'OrderController@UpdateStatus');
-$router->delete('/order/delete/{id}', 'OrderController@Delete');
-#region Admin Area
-
-#region Client Area
-$router->get('/', 'HomeController@Index');
-$router->get('/home', 'HomeController@Index');
-$router->get('/home/page/{page}', 'HomeController@Index');
-
-$router->get('/home/detail/{slug}/{id}', 'HomeController@Detail');
-
-$router->get('/home/check-out', 'HomeController@CheckOut');
-$router->post('/order', 'HomeController@Order');
-
-$router->post('/cancelled/{id}','HomeController@Cancelled');
-#endregion Client Area
-$router->run();
+	}
+	/**
+	 * @param mixed $key
+	 * @return mixed
+	 */
+	public function GetByKey($key) {
+		$sql = "
+			SELECT b.*, bc.Name AS CategoryName FROM $this->tableName b
+			JOIN BookCategory bc ON b.CategoryId = bc.Id
+			WHERE b.Title LIKE '%$key%'
+			ORDER BY CreatedAt DESC
+		";
+		$data = $this->context->fetch($sql);
+		$books = [];
+		foreach ($data as $item) {
+			$book = new Book($item);
+			array_push($books, $book);
+		}
+		return $books;
+	}
+}

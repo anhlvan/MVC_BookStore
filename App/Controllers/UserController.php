@@ -103,7 +103,7 @@ class UserController extends AdminController
             $this->userService->Update($userSave, $id);
             $this->userRoleService->RemoveRoleFromUser($id, $roleId);
             $this->userRoleService->AddRoleToUser($id, $roleId);
-            $this->redirect("/user");
+            $this->redirect('/user');
 
         }
 
