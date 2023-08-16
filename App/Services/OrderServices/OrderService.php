@@ -33,6 +33,7 @@ class OrderService extends BaseService implements IOrderService {
 	 * @param mixed $pageSize
 	 * @return mixed
 	 */
+	//xử lý phân trang
 	public function GetWithPaginate($pageIndex, $pageSize) {
         $offset = ($pageIndex - 1) * $pageSize;
         $sql = "
@@ -55,6 +56,7 @@ class OrderService extends BaseService implements IOrderService {
 	 * @param mixed $id
 	 * @return mixed
 	 */
+	//truy vấn theo ID
 	public function GetById($id) {
         $sql = "
             SELECT o.*, u.Username FROM $this->tableName o
@@ -71,6 +73,7 @@ class OrderService extends BaseService implements IOrderService {
 	 * @param mixed $data
 	 * @return mixed
 	 */
+	//thêm mới đơn hàng
 	public function Add($data) {
         $data['CreatedAt'] = date('Y-m-d H:i:s');
         $data['CreatedBy'] = $data['CreatedBy'] ?? 'System';
@@ -85,6 +88,7 @@ class OrderService extends BaseService implements IOrderService {
 	 * @param mixed $id
 	 * @return mixed
 	 */
+	//cập nhật đơn hàng
 	public function Update($data, $id) {
         $data['UpdatedAt'] = date('Y-m-d H:i:s');
         $data['UpdatedBy'] = $data['UpdatedBy'] ?? 'System';
@@ -107,6 +111,7 @@ class OrderService extends BaseService implements IOrderService {
 	 * @param mixed $pageSize
 	 * @return mixed
 	 */
+	//lấy danh sách đơn hàng dựa trên ID
 	public function GetByUserId($id, $pageIndex, $pageSize) {
 		$offset = ($pageIndex - 1) * $pageSize;
 		$sql = "
@@ -129,6 +134,7 @@ class OrderService extends BaseService implements IOrderService {
 	 * @param mixed $code
 	 * @return mixed
 	 */
+	//lấy thông tin đơn hàng dựa trên mã code
 	public function GetByCode($code) {
 		$sql = "
 			SELECT o.*, u.Username FROM $this->tableName o

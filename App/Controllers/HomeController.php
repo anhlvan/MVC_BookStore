@@ -72,6 +72,7 @@ class HomeController extends Controller
     }
 
     // [GET]
+    //thanh toán
     public function CheckOut(){
 
         $this->view('Home.CheckOut', [
@@ -114,6 +115,7 @@ class HomeController extends Controller
             return Response::success('Đặt hàng thành công');
         }
     }
+    //huỷ đơn hàng
     public function Cancelled($id){
         if(Request::method('POST')){
             $order = $this->orderService->GetById($id);

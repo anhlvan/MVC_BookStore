@@ -1,5 +1,7 @@
 <?php 
 namespace App\Services\Common;
+
+// tạo token
 class JWTToken
 {
     private static $secretKey = '3c9b320d02d1e65bc4159606e374b57c94c366cc';
@@ -25,6 +27,7 @@ class JWTToken
         return "$headerBase64.$payloadBase64.$signatureBase64";
     }
 
+    //xác minh hợp lệ
     public static function verifyToken($token)
     {
         list($headerBase64, $payloadBase64, $signatureProvided) = explode('.', $token);
@@ -35,6 +38,7 @@ class JWTToken
         return hash_equals($signatureBase64, $signatureProvided);
     }
 
+    //giải mã 
     public static function decodeToken($token)
     {
         list(, $payloadBase64,) = explode('.', $token);

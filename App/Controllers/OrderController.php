@@ -7,6 +7,7 @@ use App\Services\Common\Request;
 use App\Services\Common\Response;
 use App\Services\OrderDetailServices\OrderDetailService;
 use App\Services\OrderServices\OrderService;
+
 class OrderController extends AdminController {
     private  $orderService;
     private $orderDetailService;
@@ -59,6 +60,7 @@ class OrderController extends AdminController {
             'title' => 'Order Detail'
         ]);
     }
+    //cập nhật trạng thái đơn hàng
     public function UpdateStatus($id)
     {
        if(Request::method('POST')){
@@ -70,6 +72,7 @@ class OrderController extends AdminController {
             return  $result ? Response::success('Cập nhật thành công') : Response::badRequest('Cập nhật thất bại');
        }
     }
+    //xoá đơn hàng
     public function Delete($id)
     {
         if(Request::method('DELETE')){

@@ -12,6 +12,7 @@ class UserRoleService implements IUserRoleService
 	 * @param mixed $username
 	 * @return mixed
 	 */
+	//lấy thông tin về vai trò người dùng dựa trên tên người dùng
 	public function GetRoleByUsername($username) 
     {
         $sql = "SELECT Roles.Name,Roles.Id FROM  UsersRoles 
@@ -42,6 +43,7 @@ class UserRoleService implements IUserRoleService
 	 * @param mixed $roleName
 	 * @return mixed
 	 */
+	//thêm người dùng
 	public function AddRoleToUser($userId, $roleId) {
         $sql = "INSERT INTO UsersRoles (Id,UserId, RoleId) 
         VALUES (UUID(),'$userId', '$roleId')";

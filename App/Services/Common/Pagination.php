@@ -2,6 +2,7 @@
 
 namespace App\Services\Common;
 
+//phân trang
 class Pagination
 {
     protected $baseURL = '';
@@ -50,6 +51,7 @@ class Pagination
         }
     }
 
+    //tạo trạng thái hiển thị phân trang
     function createdShowing()
     {
         // If total number of rows is zero, do not need to continue
@@ -101,6 +103,7 @@ class Pagination
     /**
      * Generate the pagination links
      */
+    //liên kết phân trang
     function createLinks()
     {
         // If total number of rows is zero, do not need to continue
