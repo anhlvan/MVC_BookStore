@@ -5,7 +5,7 @@
                 <div class="d-flex flex-column h-100">
                     <div class="mb-4 mb-md-5 text-center">
                         <a href="index.html" class="d-block auth-logo">
-                            <img src="/assets/images/logo-sm.svg" alt="" height="28"> <span class="logo-txt">Minia</span>
+                            <img src="/assets/images/logo-sm.svg" alt="" height="28"> <span class="logo-txt">Website bán sách</span>
                         </a>
                     </div>
                     <div class="auth-content my-auto">
@@ -54,7 +54,7 @@
                     <div class="mt-4 mt-md-5 text-center">
                         <p class="mb-0">© <script>
                                 document.write(new Date().getFullYear())
-                            </script> PYHTeam <i class="mdi mdi-heart text-danger"></i> by SenMS</p>
+                            </script>Nhóm 1<i class="mdi mdi-heart text-danger"></i></p>
                     </div>
                 </div>
             </div>
