@@ -40,6 +40,7 @@ class RoleService extends BaseService implements IRoleService
 	 */
 	public function GetWithPaginate($pageIndex, $pageSize) {
         $sql = SqlCommon::Select_Condition($this->tableName, "LIMIT $pageIndex, $pageSize");
+		// $sql = "Select * from Roles";
         $data = $this->context->fetch($sql);
         // to array object role
         $roles = [];
